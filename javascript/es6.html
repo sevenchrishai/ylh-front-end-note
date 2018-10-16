@@ -259,6 +259,42 @@
     console.log(5);
     // 打印顺序依次是 2 3 5 4 1
 
+    /**
+     * 类- 定义一个类的一种方法是使用一个类声明。要声明一个类，你可以使用带有class关键字的类名
+     * 一个类表达式是定义一个类的另一种方式。类表达式可以是被命名的或匿名的。赋予一个命名类表达式的名称是类的主体的本地名称。
+     */
+    class Rectangle {
+        // constructor
+        constructor(height, width) {
+            this.height = height;
+            this.width = width;
+        }
+        // getter
+        get area(){
+            return this.calcArea()
+        }
+        // method
+        calcArea(){
+            return this.height*this.width
+        }
+    }
+    /* 匿名类 */
+    let Rectangle1 = class {
+        constructor(height, width) {
+            this.height = height;
+            this.width = width;
+        }
+    };
+    /* 命名的类 */
+    let Rectangle2 = class Rectangle2 {
+        constructor(height, width) {
+            this.height = height;
+            this.width = width;
+        }
+    };
+    const re = new Rectangle(3,4)
+    console.log(re.area)    //12
+
 
 
 </script>
