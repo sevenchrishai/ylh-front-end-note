@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>data-自定义属性</title>
+</head>
+<body>
+
+<div id="data" data-author="chris" data-time="2018-10-11" data-comment-num="10">div自定义属性</div>
+
+<script>
+    console.log(document.getElementById("data").dataset)
+    // data- 提供自定义属性，获取的时候遵循驼峰命名
+    // DOMStringMap {author: "chris", time: "2018-10-11", commentNum: "10"}
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>点击特效</title>
+    <style>
+        .fa{
+            width: 100px;
+            height: 200px;
+            background: lightgreen;
+            border: 1px solid #dddddd;
+            overflow: hidden;
+        }
+        #bar{
+            width: 100px;
+            height: 200px;
+            background: #f2f2f2;
+        }
+        input[type=button]{
+            width: 50px;
+            height: 50px;
+            border: 0;
+            background: url("../image/icon_charge.png") center no-repeat;
+            background-size: contain;
+            cursor: pointer;
+            margin-left: 25px;
+        }
+        .pp{
+            background: #dddddd;
+            width: 200px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>永远充不满电的电池</h1>
+<div class="fa">
+    <div id="bar"></div>
+</div>
+<input type="button" value="">
+
+<div>
+    <acronym>acronym定义首字母缩写,h5用abbr代替</acronym>
+    <abbr title="World Wide Web">WWW</abbr>
+    <input type="range" value="50">
+    <input type="date">
+    <input type="week">
+    <meter value="1" min="0" max="8"></meter>
+    <svg height="190">
+        <polygon points="100,10 40,180 190,60 10,60 160,180"
+                 style="fill:red;stroke:black;stroke-width:3;fill-rule:evenodd;" />
+    </svg>
+    <p class="pp" contenteditable="false" draggable="true" dir="ltr">123456</p>
+
+</div>
+
+<script src="../javascript/jquery-1.8.3.js"></script>
+<script>
+    function add() {
+        var _bar = $("#bar");
+        var _h = _bar.height();
+        _h++;
+        if (_h > 200){
+            _h = 200;
+        }
+        _bar.height(_h)
+    }
+    var addInt = setInterval(add, 200)
+    $("input").on("click",function () {
+        var _bar = $("#bar");
+        var _h = _bar.height();
+        if (_h < 0){
+            clearInterval(addInt)
+        } else {
+            _h -= 5
+            _bar.height(_h);
+        }
+    })
+    console.log(navigator.appName)   //Netscape
+    console.log(navigator.appCodeName)   //Mozilla
+    console.log(navigator.appVersion)   //5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36
+    console.log(navigator.browserLanguage)  //
+</script>
+</body>
+</html>

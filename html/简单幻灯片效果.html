@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>幻灯片</title>
+    <style>
+        .huan1 img {
+            display: none;
+            width: 100px;
+            height: 100px;
+        }
+        .huan1 input:checked + img {
+            display: block;
+        }
+        .huan1 input {
+            position: absolute;
+            left: -9999px;
+        }
+        .huan1 label {
+            cursor: pointer;
+        }
+        /*-----*/
+        .huan2 #cont2 {
+            position: relative;
+            height: 100px;
+        }
+        .huan2 img {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            z-index: 1;
+        }
+        .huan2 img:first-child,
+        img:target {
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+<div class="huan1">
+    <div id="cont">
+        <input id="img1" name="img" type="radio" checked="checked">
+        <img src="../image/icon_contact.png">
+        <input id="img2" name="img" type="radio">
+        <img src="../image/icon_msg.png">
+    </div>
+    <div id="nav">
+        <label for="img1">第一张</label>
+        <label for="img2">第二张</label>
+    </div>
+</div>
+<div class="huan2">
+    <div id="cont2">
+        <img id="img12" src="../image/icon_news.png">
+        <img id="img22" src="../image/icon_video.png">
+    </div>
+    <div>
+        <a href="#img12">one</a>
+        <a href="#img22">two</a>
+    </div>
+</div>
+</body>
+</html>

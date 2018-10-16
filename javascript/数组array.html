@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组array</title>
+</head>
+<body>
+
+<script>
+    var arr = new Array("1","2","3");
+    var arr1 = [1,2,3];
+    var arr2 = [];
+    var arr3 = "";
+    console.log(arr2 instanceof Array)
+    // 判断是否是Array
+    function isArray(obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+    }
+    console.log(isArray(arr2))
+
+
+    // 什么是hash哈希表
+    // 类比数组，数组是编程上的哈希表，哈希表是一种数据结构，关键点是用一个key值来取对应数据，就像数组的下标
+    var foo1 = "Hello";
+    (function() {
+        var bar1 = " World";
+        console.log(foo1 + bar1); //Hello World
+    })();
+    // console.log(foo1 + bar1); //Uncaught ReferenceError: bar is not defined
+
+    var foo = {n: 1};
+    var bar = foo;
+    foo.x = foo = {n: 2};   // <=> foo.x = {n:2}; foo={n:2}
+    console.log(foo.x)    // undefined
+    console.log(bar.x)  //  {n:2}
+</script>
+
+</body>
+</html>

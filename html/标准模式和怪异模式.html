@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>标准模式与怪异模式</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .fa{
+            background-color: #f2f2f2;
+        }
+        .fa div{
+            width: 50%;
+            height: 100px;
+            line-height: 100px;
+            float: left;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .left{
+            background-color: lightgreen;
+            border-right: 1px solid darkred;
+        }
+        .right{
+            background-color: lightblue;
+        }
+
+    </style>
+</head>
+<body>
+<div class="fa">
+    <div class="left">怪异模式的一个应用：两列50%布局中的分隔</div>
+    <div class="right">box-sizing: border-box;</div>
+</div>
+
+</body>
+</html>

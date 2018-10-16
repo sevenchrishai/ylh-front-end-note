@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS真题</title>
+</head>
+<body>
+
+<ol>
+    <li>在一个字符串中找到第一个只出现一次的字符，如输入abaccdefbf，则输出d，找不到则输出false</li>
+    <li>写一个函数sort,将整数数组按奇偶数分为2部分，数组左边是奇数，右边是偶数</li>
+    <li>请尽可能完整的描述从输入URL到整个网页加载完毕及显示到屏幕中的整个流程</li>
+    <li>前端优化的方法有哪些</li>
+    <li>JavaScript的typeof返回的结果有哪些 <b>number,string,boolean,object,undefined,function</b></li>
+    <li>请用css实现多行文字的垂直居中</li>
+    <li>谈谈你对盒模型的理解，以及如何在css中告诉浏览器使用不同的盒模型来渲染你的布局</li>
+    <li>[1<2<3, 3<2<1]结果是什么 <b>[true,true]</b></li>
+    <li>
+        以下程序输出的结果是什么 <b>Do not know</b><br>
+        <pre>
+    function showCase(value){
+        switch(value){
+            case 'A':
+                console.log('Case A')
+                break
+            case 'B':
+                console.log('Case B')
+                break
+            case undefined:
+                console.log('undefined')
+                break
+            default:
+                console.log('Do not know')
+        }
+    }
+    showCase(new String('A'))
+        </pre>
+    </li>
+    <li>“1 2 3”.replace(/\d/g, parseInt) 的结果是什么 <b>1 NaN 3</b></li>
+    <li>以下哪个方法会改变原数组 <b>splice()</b><br>
+        A:concat();<br>
+        B:join();<br>
+        C:slice();<br>
+        D:splice();）
+    </li>
+    <li>下面哪一个方法是用来追加到指定元素的末尾的  <b>insertAfter()</b><br>
+        A:insertTo();<br>
+        B:appendTo();<br>
+        C:insertAfter();<br>
+        D:appendAfter();
+    </li>
+    <li>要去掉文本超链接的下划线，下列正确的是 <a href="" style="text-decoration: none">超链接</a></li>
+    <li>哪个HTML5内建对象用于在画布上绘图的环境 <b>getContext</b></li>
+    <li>下列哪个选项不属于document对象的方法 <b>bgColor()</b><br>
+        A:bgColor();<br>
+        B:createElement();<br>
+        C:getElementById();<br>
+        D:querySelector();
+    </li>
+    <li>下列哪个标签不是HTML5新增的标签 <b>font</b><br>
+        A:section<br>
+        B:vedio<br>
+        C:nav<br>
+        D:font
+    </li>
+    <li>关于CSS中的单位以下哪个说法是正确的 <b>(A)</b><br>
+        A:px是相对于显示器屏幕分辨率的相对单位长度<br>
+        B:em是相对于body标签font-size的单位（em相对父元素）<br>
+        C:rem是相对于其父元素来设置字体大小的（rem相对根元素）<br>
+        D:vh是印刷常用单位‘磅’，大小为1/72英寸（pt才是磅，vh等于viewport高度的1/100）
+    </li>
+
+</ol>
+
+
+<script>
+    //在一个字符串中找到第一个只出现一次的字符，如输入abaccdefbf，则输出d，找不到则输出false
+    var _str = "abaccdefbf";
+    console.log(getOnly(_str))  //d
+    function getOnly(str){
+        var _arr = str.split("");
+        var tempObj = {};
+        var result;
+        for(var i=0;i<_arr.length;i++){
+            if(tempObj[_arr[i]]){
+                tempObj[_arr[i]]++
+            }else {
+                tempObj[_arr[i]] = 1
+            }
+        }
+        console.log(tempObj)
+        for(var key in tempObj){
+            if (tempObj[key] === 1){
+                result = key
+                break
+            }else {
+                result = false
+            }
+        }
+        return result
+    }
+    console.log('----------------------------------------------')
+    //写一个函数sort,将整数数组按奇偶数分为2部分，数组左边是奇数，右边是偶数
+    var __arr = [1,2,3,4,5,6,7,8,9,0];
+    console.log(sort(__arr))    //[9, 7, 5, 3, 1, 2, 4, 6, 8, 0]
+    console.log(sort1(__arr))   //[1, 3, 5, 7, 9, 0, 2, 4, 6, 8]
+    function sort(arr) {
+        var new_arr = [];
+        for (var i=0;i<arr.length;i++){
+            if (arr[i]%2 === 0){
+                new_arr.push(arr[i])
+            }else {
+                new_arr.unshift(arr[i])
+            }
+        }
+        return new_arr;
+    }
+    function sort1(arr) {
+        var new_arr = [],arr1=[],arr2=[];
+        for (var i=0;i<arr.length;i++){
+            if (arr[i]%2 === 0){
+                arr1.push(arr[i])
+            }else {
+                arr2.push(arr[i])
+            }
+        }
+        arr1 = arr1.sort()
+        arr2 = arr2.sort()
+        return new_arr=arr2.concat(arr1);
+    }
+    console.log('----------------------------------------------')
+    //
+    function showCase(value){
+        switch(value){
+            case 'A':
+                console.log('Case A')
+                break
+            case 'B':
+                console.log('Case B')
+                break
+            case undefined:
+                console.log('undefined')
+                break
+            default:
+                console.log('Do not know')
+        }
+    }
+    console.log(new String('A'))    //String {"A"}
+    console.log(String('A'))    //A
+    // 当 String() 和运算符 new 一起作为构造函数使用时，它返回一个新创建的 String 对象，存放的是字符串 s 或 s 的字符串表示。
+    // 当不用 new 运算符调用 String() 时，它只把 s 转换成原始的字符串，并返回转换后的值。
+    showCase(new String('A'))   //Do not know
+    showCase(String('A'))   //Case A
+    console.log('----------------------------------------------')
+    console.log(typeof 1)   //number
+    console.log(typeof "1") //string
+    console.log(typeof false)   //boolean
+    console.log(typeof {a:1})   //object
+    console.log(typeof null)    //object
+    console.log(typeof aadsa)   //undefined
+    console.log(typeof function () {})  //function
+    console.log('----------------------------------------------')
+    // true的值为1,false为0
+    console.log([1<2<3,3<2<1])  //[true, true]
+    // 相当于 [true<3, false<1]
+    console.log(3<2<1) //true
+    console.log('----------------------------------------------')
+    // 这里考验两个知识点，一是parseInt()的用法，而是replace()的用法
+    // 1.parseInt(string,radix); 注意第二个参数，是表示进制数，不传默认是十进制
+    // 2.str.replace(regexp|substr, newSubStr|function) 在第二个参数是函数时，当匹配执行后，该函数就会执行
+    // 该函数的第一个参数是匹配模式的字符串，(与模式中的子表达式匹配的字符串，可以有 0 个或者多个这样的参数。)
+    // 接下来的参数是一个整数，声明了匹配在 StringObject 中出现的位置，
+    // 最后一个参数是 StringObject 本身。
+    console.log("1 2 3".replace(/\d/g, parseInt))   //1 NaN 3
+    //相当于以下表达
+    console.log(parseInt("1", 0, '1 2 3')); // 1
+    console.log(parseInt("2", 2, '1 2 3')); // NaN
+    console.log(parseInt("3", 4, '1 2 3'))  // 3
+    console.log("123".replace(/\d/g, parseInt))   //1NaNNaN
+    console.log("1 2 3".replace(/\d/g, 1))   //1 1 1
+    console.log('----------------------------------------------')
+    var a1 = [1,2,3,4];
+    var a2 = [3,4,5,6];
+    console.log(a1.concat(a2)); //[1, 2, 3, 4, 3, 4, 5, 6]
+    console.log(`${a1};${a2}`)  //1,2,3,4;3,4,5,6
+    console.log(a1.join(""))    //1234
+    console.log(a1) //[1, 2, 3, 4]
+    console.log(a1.slice(1,2))  //[2]       截取第二个值到第三个值（不包含第三个值）
+    console.log(a1) //[1, 2, 3, 4]
+    console.log(a1.splice(1,2)) //[2, 3]    从第二个开始，截取两个值
+    console.log(a1) //[1, 4]        splice方法会改变原数组
+    console.log('----------------------------------------------')
+
+
+
+</script>
+</body>
+</html>

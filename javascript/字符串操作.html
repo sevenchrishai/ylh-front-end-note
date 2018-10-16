@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字符串操作</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <style>
+        .fa{
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-color: #f2f2f2;
+            display: flex;
+            /*水平居中*/
+            justify-content: center;
+            /*justify-content: space-between;*/
+            /*justify-content: space-around;*/
+            /*垂直居中*/
+            align-items: center;
+        }
+        /*.son{*/
+            /*position: absolute;*/
+            /*width: 100px;*/
+            /*height: 100px;*/
+            /*margin: auto;*/
+            /*top: 0;*/
+            /*left: 0;*/
+            /*right: 0;*/
+            /*bottom: 0;*/
+            /*background-color: yellow;*/
+        /*}*/
+        .son{
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            /*position: absolute;*/
+            /*top: 50%;*/
+            /*left: 50%;*/
+            /*!*margin: -50px 0 0 -50px;*!*/
+            /*transform: translate(-50%, -50%);*/
+        }
+        .son1{
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+
+        }
+    </style>
+</head>
+<body>
+
+<h1>你好，中国</h1>
+
+<div class="fa">
+    <div class="son"></div>
+    <div class="son1"></div>
+</div>
+<table border="1" width="300" align="center">
+    <tr>
+        <td align="center">t1</td>
+        <td>t2</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>2</td>
+    </tr>
+</table>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * 字符是否一致
+     * @param str1
+     * @param str2
+     * @returns {boolean}
+     */
+    function isMatch(str1, str2) {
+        // ...
+        return str1.split('').sort().join('') === str2.split('').sort().join('');
+    }
+    console.log(isMatch('something', 'ginhtemos'))  // true
+    console.log(isMatch('aaa', 'aa'))  //false
+    console.log(isMatch('abb', 'baa'))  //false
+    console.log(isMatch('hello', 'olelh'))  //true
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * 值类型之间传递，传递的是值
+     * 引用类型（Object）之间传递，传递的是地址（引用）  引用类型的对象在堆上存储，地址在栈上存储
+     * @param x
+     * @param y
+     */
+    function swap(x, y) {
+        // var temp = x;
+        // x = y;
+        // y = temp;    // 这里是对x与y引用地址的调换，传递进来的是引用地址，方法里没有改变对象，所以obj1,obj2无变化
+        x.name = 'k';
+        y.age = 3;  // 这里改变了对象的值，因此obj1和obj2指向的的对象也改变了
+    }
+    var a = 1;
+    var b = 2;
+    swap(a, b);
+    console.log(a); // 1
+    console.log(b); // 2
+    var obj1 = {name: 'j'};
+    var obj2 = {age: 2};
+    swap(obj1, obj2);
+    console.log(obj1);  //  {name: "k"}
+    console.log(obj2);  //  {age: 3}
+
+    //以下代码输出什么? 为什么?
+    var a = {n:1};
+    var b = a;
+    a = {n:2};  //变量a指针改为指向对象 {n:2}
+    a.x = a ;   //注意运算符的优先级。先给对象a增加x属性，再给x属性赋值。此时x属性的值指向a对象自身。即：a = {n:2,x:a}
+    console.log(a.x);// {n:2, x: {...}} 无限循环
+    console.log(b.x);// undefined   由于b指针没变，还是指向{n:1} ，故b.x: undefined
+
+    var a = {n:1};
+    var b = a;  // b与a的指针均指向 {n:1}
+    // 注意运算符优先级`.` > `=`
+    // 先给a添加x属性。故添加x属性后，a指向的对象{n:1}变为{n:1, x:undefined/待赋值}, 由于b是和a指向的同一个对象，
+    // 所以此时b={n:1, x:undefined/待赋值}
+    // 然后再进行赋值操作。a.x = {n:2} ，故x属性的值为{n:2}，此时a=b={n:1,x:{n:2}}
+    // 继续赋值操作。 a = {n:2}, a的指针由指向{n:1,x:{n:2}} 变为指向对象 {n:2}
+    a.x = a = {n:2};    //<=>   a.x={n:2}; a={n:2}
+    console.log(a.x);// undefined   此时a={n:2}, 故a.x为undefined
+    console.log(b.x);// {n:2}   b指针始终没变，b={n:1,x:{n:2}}, 故b.x为{n:2}
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * 运算符问题
+     * @type {{valueOf: object1.valueOf, toString: object1.toString}}
+     */
+    var object1 = {
+        valueOf: function () {
+            return 1;
+        },
+        toString: function () {
+            return "object1";
+        }
+    };
+    var object2 = {
+        valueOf: function () {
+            return 2;
+        },
+        toString: function () {
+            return "object2";
+        }
+    };
+    var object3 = {
+        valueOf: function () {
+            return 3;
+        },
+        toString: function () {
+            return "object3";
+        }
+    };
+    console.log((object2 > object1 +-- object1) + true); //输出什么？ 解释原因   输出：2
+    //object1和object2 都是对象，所以运算的时候会调用valueOf方法，所以得到：
+    //          (   2   >   1   + --1) + true
+    //--1为前递减所以为0，2 > 1为true 得到：
+    //          (      true   + 0) + true
+    //布尔值在运算时会自动转为数字 true -> 1 false -> 0，得到：
+    //          (       1   + 0) +  1
+    console.log((object2, object1, object3) + object1 +-- object1)  //输出：？
+    //逗号运算符,的作用是对每个表达式求值,并返回最后一个表达式的值.
+    //  (2,1,3) + 1 + --1   =>  3 + 1 + 0 = 4
+    //以下代码是否报错，如果不报错输出什么，为什么
+    var x = !!"Hello" + (!"world", !!"from here!!");
+    //      1   +   (0, 1)
+    console.log(x); //  2
+    //~的作用是什么? ~4的结果是多少？为什么?
+    //  ~操作符(位运算 NOT 由否定号（~）表示) 转换成二进制后 取反数。
+    //  记住这个规则：一个数加1然后再取相反数:-(n+1) ；或者先取反再减1:-n-1
+    //     比如：~3就变成-(3+1)=-4      ~(-6)就是-(-6+1)=5
+    console.log(~4); //  -5
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * typeof是用于判断数据类型,以字符串的形式返回数据类型.
+     * @type {String}
+     */
+    var str = new String("Hello");
+    var result = typeof(str instanceof String); //  =>  typeof(true)
+    console.log(result); // boolean
+    result = typeof typeof(str instanceof String); //  =>  typeof(boolean)  === typeof("boolean")
+    console.log(result); // string
+    result = typeof typeof typeof(str instanceof String); //  =>  typeof(string)
+    console.log(result); // string
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    //  以下代码会报错吗？如果不报错输出什么?为什么
+    var result = (2..valueOf() + ({z : 10, x : 20}).x); //  (2.0 + 20)  =>  22
+    console.log(result);    // 22   -   程序从左向右读，会把数字后面的第一个.识别为小数点，第二个点才会识别为操作符
+    // result = (2.valueOf() + ({z : 10, x : 20}).x); //  报错：Uncaught SyntaxError: Invalid or unexpected token
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    //  1.写一个函数 isEmptyObject，判断一个对象是不是空对象
+    function isEmptyObject(obj){
+        return Object.keys(obj).length === 0 && obj.constructor === Object
+    }
+    console.log("1")
+    console.log(isEmptyObject( {} )); //true
+    console.log(isEmptyObject( {a:1} )); //false
+    //  2.如果可以用 ES5，那么你会如何写这个函数？
+    function isEmptyObject1(obj) {
+        for (var prop in obj){
+            if (obj.hasOwnProperty(prop))
+                return false;
+        }
+        return JSON.stringify(obj) === JSON.stringify({})
+    }
+    console.log("2")
+    console.log(isEmptyObject1( {} )); //true
+    console.log(isEmptyObject1( {a:1} )); //false
+    //  3.如果可以用 jQuery，如何写？
+    console.log("3")
+    console.log($.isEmptyObject({}));   //true
+    console.log($.isEmptyObject({a:1}));   //false
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * 变量声明提升
+     * @type {number}
+     */
+    //以下代码会不会报错，如果不报错输出什么，为什么
+    var y = 10;     //<=>   var x; var y = 10;
+    if (!(x in window)) {
+        var x = 10;     //<=>   x = 10;
+    } else {
+        ++y;
+    }
+    console.log(x);//undefined  -   var 在 if 里面，会提前到块级作用域的开始
+    console.log(y);//11
+    //如下代码的输出是什么? 为什么？
+    var a = 1;
+    function fn(){
+        console.log(a); // undefined
+        var a = 5;
+        console.log(a); //  5
+        a++;
+        var a;
+        fn2();
+        console.log(a); //  20
+        function fn2(){
+            console.log(a); // 6
+            a = 20;
+            b = 100; // 没有var,所以b是全局变量
+        }
+    }
+    fn();
+    console.log(a); //  1
+    a = 10;
+    console.log(a); //  10
+    console.log(b); //  100
+    // 结果依次为： undefined，5,6,20,1,10,100
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * 一般来说，this总是指向调用某个方法的对象，但是使用call()和apply()方法时，就会改变this的指向。
+     * this绑定有四种情况；
+         默认绑定：函数独立调用时，this默认绑定到window
+         隐式绑定：看函数调用栈，上一个的栈点就是this，console.trace()可查看函数的调用关系
+         显式绑定：如call,apply,bind，this指向绑定对象
+         new绑定：this指向new出来的对象
+     *
+     * @type {number}
+     */
+    //以下代码输出什么？为什么
+    var number = 50;
+    var obj = {
+        number: 60,
+        getNum: function () {
+            var number = 70;
+            return this.number;
+        }
+    };
+    console.log(obj.getNum());  //60
+    console.log(obj.getNum.call()); //<=> obj.getNum.call(window)   输出：50
+    console.log(obj.getNum.call({number:20}));  //20
+    var name = 'the window';
+    var obj = {
+        name: 'the obj',
+        getName: function () {
+            return function () {
+                return this.name;
+            }
+        }
+    }
+    console.log(obj.getName())    // ƒ () {return this.name;}
+    console.log(obj.getName()())    // the window
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    /**
+     * 写一个函数，列出一个整数所有的分解类型，比如对于数字4，可以做拆分得到下列字符串
+     1111   1+1+1+1
+     112    1+1+2
+     121    1+2+1
+     13     1+3
+     211    2+1+1
+     22     2+2
+     31     3+1
+     4      4
+     */
+    //-----------------------------------------------------------------------------------------------------
+    function f() {
+        var arr = Array.from(arguments);
+        let before = arr.slice(0, arr.length - 1);
+        let n = arr[arr.length - 1];
+        for (let i = 1; i < n; i++) {
+            f(...before, i, n - i);
+        }
+        console.log(arr);
+    }
+    f(4)
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * 从某数据库接口得到如下值：rows是数据，metaData是对数据的说明。现写一个函数，将上面的Object转化为期望的数组：
+     * [
+         {name: "Lisa", age: 16, gender: "Female", birthday: "2000-12-01"},
+         {name: "Bob", age: 22, gender: "Male", birthday: "1996-01-21"},
+     ]
+     * @type {{rows: *[], metaData: *[]}}
+     */
+    var data = {
+        rows: [
+            ["Lisa", 16, "Female", "2000-12-01"],
+            ["Bob", 22, "Male", "1996-01-21"]
+        ],
+        metaData: [{
+            name: "name",
+            note: ''
+        }, {
+            name: "age",
+            note: ''
+        }, {
+            name: "gender",
+            note: ''
+        }, {
+            name: "birthday",
+            note: ''
+        }]
+    }
+    //  reduce() 方法对累加器和数组中的每个元素（从左到右）应用一个函数，将其简化为单个值。
+    //  callback(acc, cur)
+    //      acc: 累加器累加回调的返回值; 它是上一次调用回调时返回的累积值
+    //      cur: 数组中正在处理的元素。
+    var result = data.rows.reduce(function(prev1, cur1) {
+        prev1.push(data.metaData.reduce(function(prev, cur, index) {
+            prev[cur.name] = cur1[index];
+            return prev;
+        }, {}))
+        return prev1;
+    }, []);
+    console.log(result);
+    /**
+     *  数组
+         a = [
+         {id: 10001, name: "Lisa", age: 16},
+         {id: 10002, name: "Bob", age: 22},
+         {id: 10003, name: "Alice", age: 20},
+         ];
+        数组
+         b = [
+         {id: 10001, gender: "Female"},
+         {id: 10002, name: "Bob King", birthday: "1996-01-22"},
+         {id: 10005, name: "Tom", birthday: "2000-01-01"},
+         ];
+        写一个函数按id用b更新a,期望得到的结果为：
+         [
+         {id: 10001, name: "Lisa", age: 16, gender: "Female"},
+         {id: 10002, name: "Bob King", birthday: "1996-01-22", age: 22},
+         {id: 10003, name: "Alice", age: 20},
+         {id: 10005, name: "Tom", birthday: "2000-01-01"},
+         ]
+     */
+    var a = [
+        {id: 10001, name: "Lisa", age: 16},
+        {id: 10002, name: "Bob", age: 22},
+        {id: 10003, name: "Alice", age: 20},
+    ];
+    var b = [
+        {id: 10001, gender: "Female"},
+        {id: 10002, name: "Bob King", birthday: "1996-01-22"},
+        {id: 10005, name: "Tom", birthday: "2000-01-01"},
+    ];
+    const map = a.reduce((acc, curr, index) => {
+        acc[curr.id] = index;
+        return acc;
+    }, {});
+    console.log(map)    //  {10001: 0, 10002: 1, 10003: 2}
+    b.forEach(item => {
+        const index = map[item.id];
+        if (index !== undefined) {
+            //  Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。
+            //  如果目标对象中的属性具有相同的键，则属性将被源中的属性覆盖。后来的源的属性将类似地覆盖早先的属性。
+            a[index] = Object.assign(a[index], item);  // 第一个参数是目标对象，第二个是源对象
+        } else {
+            a.push(item);
+        }
+    });
+    console.log(a)
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * 循环/闭包/setTimeout/Promise 综合
+     */
+    //控制台显示内容为?
+    // for (var i = 0; i < 5; i++) {
+    //     console.log(i); //  for循环 - 输出  0,1,2,3,4   （直接输出 0 到 4）
+    // }
+    // console.log('1*****')
+    //控制台显示内容为?
+    // for (var i = 0; i < 5; i++) {
+    //     setTimeout(function() {
+    //         console.log(i); //  有异步  -   输出 5,5,5,5,5   （开始输出一个 5，然后每隔一秒再输出一个 5，一共 5 个 5。）
+    //     }, 1000 * i);
+    // }
+    // console.log('2*****')
+    //控制台显示内容为?
+    // for (var i = 0; i < 5; i++) {
+    //     (function(i) {
+    //         setTimeout(function() {
+    //             console.log(i); //  是立即执行函数，独立作用域  -   0,1,2,3,4
+    //         }, i * 1000);
+    //     })(i);
+    // }
+    // console.log('3*****')
+    //控制台显示内容为?
+    // for (var i = 0; i < 5; i++) {
+    //     (function() {       // 把 i 抽掉，内部其实没有对 i 保持引用
+    //         setTimeout(function() {
+    //             console.log(i); //  5,5,5,5,5
+    //         }, i * 1000);
+    //     })(i);
+    // }
+    // console.log('4*****')
+    //控制台显示内容为?
+    // for (var i = 0; i < 5; i++) {
+    //     //  这里给 setTimeout 传递了一个立即执行函数。额，setTimeout 可以接受函数或者字符串作为参数，那么这里立即执行函数是个啥呢，
+    //     //  应该是个 undefined ，也就是说等价于：
+    //     //  setTimeout(undefined, ...);
+    //     //  而立即执行函数会立即执行，那么应该是立马输出的。
+    //     //  “应该是立马输出 0 到 4 吧。”
+    //     setTimeout((function(i) {
+    //         console.log(i); //  0,1,2,3,4
+    //     })(i), i * 1000);
+    // }
+    // console.log('5*****')
+    //控制台显示内容为?
+    setTimeout(function() {
+        console.log(1)
+    }, 0);
+    new Promise(function executor(resolve) {
+        // promise 只要被创建就会立即执行  2,3
+        console.log(2);
+        for( var i=0 ; i<10000 ; i++ ) {
+            i == 9999 && resolve();
+        }
+        console.log(3);
+    }).then(function() {
+        console.log(4);     // .then 异步回调   5,4,1
+        // 4 在 1 前面输出是因为 Promise.then()里面的回调属于 microtask, 会在当前 Event Loop 的最后执行,
+        // 而 SetTimeout 内的回调属于 macrotask, 会在下一个 Event Loop 中执行
+    });
+    console.log(5);     // 输出顺序为    2,3,5,4,1
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * js简易随机打乱数组方法
+     * @param a
+     * @returns {*}
+     */
+    function shuffle(a) {
+        var len = a.length;
+        for(var i=0;i<len;i++){
+            var end = len - 1 ;
+            var index = (Math.random()*(end + 1)) >> 0;
+            var t = a[end];
+            a[end] = a[index];
+            a[index] = t;
+        }
+        return a;
+    };
+    var arr = ["10","J","Q","K","A","2","3","4"];
+    console.log(shuffle(arr)); // ["10", "J", "K", "Q", "4", "3", "A", "2"] 为随机数组
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * 如何将数组去重
+     */
+    var arr = [1,1,1,2,2,3,4,5,6,2,2,7,5,8];    // 去重结果：[1,2,3,4,5,6,7,8]
+    // 1.循环数组，判断数组中是否有这个值，没有则push到新创建array中，有则return
+    var newArr = [];
+    for(var i=0;i<arr.length; i++){
+        if (newArr.indexOf(arr[i]) === -1){
+            newArr.push(arr[i])
+        }
+    }
+    console.log(newArr) //[1, 2, 3, 4, 5, 6, 7, 8]
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    //  统计字符串中字母个数或统计最多字母数。
+    var str = 'aaaabbbcccddfgghdd';
+    function newStr(godStr){
+        var obj = {};
+        //循环遍历字符
+        for(var i =0,len=godStr.length;i<len;i++){
+            // var num = godStr.charAt(i);//将获取的每个字母进行赋值给变量num；
+            var char = godStr[i];//将获取的每个字母进行赋值给变量char；
+            //将获取的每个字符当做对象的属性保存到对象；计算的个数保存到对象的值中
+            if(obj[char]){
+                ++obj[char];//表示对象中存在该字符，进行加1操作；
+            } else{
+                obj[char] = 1;
+            }
+        }
+        return obj;
+    }
+    console.log(newStr(str));//统计字符的个数；
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------
+    /**
+     * 正则表达式运用
+     */
+    // var match = new RegExp(/^\s$/); //写错了
+    // 实现 string.trim();
+    // var match = /(^\s*)|(\s*$)/g;
+    var match = new RegExp(/(^\s*)|(\s*$)/, 'g');
+    var str = "  abc b d  ";
+    str.replace(match, "");
+    console.log("l-" + str + "-r")
+    console.log("l-" + str.replace(match, "") + "-r")
+    // function trim(str) {
+    //     if (str && typeof str === "string") {
+    //         return str.replace(/(^\s*)|(\s*)$/g,""); //去除前后空白符
+    //     }
+    // }
+    // console.log("l-" + trim(str) + "-r")
+    //使用正则表达式验证邮箱格式
+    var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/;
+    var email = "example@qq.com";
+    console.log(reg.test(email));  // true
+    console.log('-------------------------------------------------')
+    //-----------------------------------------------------------------------------------------------------
+
+
+
+
+
+</script>
+</body>
+</html>

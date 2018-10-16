@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件代理</title>
+    <style>
+        li{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="fa">
+    <ul id="ulfa">
+        <li id="i1">点击事件1</li>
+        <li id="i2">点击事件2</li>
+        <li id="i3">点击事件3</li>
+    </ul>
+</div>
+<div class="desc">
+    当我们需要对很多元素添加事件的时候，可以通过将事件添加到它们的父节点
+    将事件代理（事件委托）给父节点来触发处理函数（原理是事件冒泡机制）<br>
+    事件代理和委托（delegation） <br>
+    如果想阻止事件起泡，可以使用e.stopPropagation()（Firefox）或者e.cancelBubble=true（IE）来组织事件的冒泡传播。<br>
+</div>
+<div>
+    <div id="link-list">
+        <a href="" id="a1">item1</a>
+        <a href="" id="a2">item2</a>
+        <a href="" id="a3">item3</a>
+    </div>
+</div>
+
+<script src="jquery-1.8.3.js"></script>
+<script>
+    // 获取父节点，为它添加一个事件
+    document.getElementById("ulfa").addEventListener("click", function (ev) {
+        // 检查事件源 e.target 是否是li
+        if(ev.target && ev.target.nodeName.toUpperCase() === "LI"){
+            //这里才是处理过程
+            console.log(ev.target)
+            console.log(`List item ${ev.target.id} was clicked`);
+        }
+
+    })
+
+    // jQuery 事件委托
+    $("#link-list").delegate("a", "mouseover", function () {
+        console.log(`这是 ${$(this).attr("id")}`)
+    })
+</script>
+
+</body>
+</html>

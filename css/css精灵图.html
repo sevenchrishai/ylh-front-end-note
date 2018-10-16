@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>精灵图</title>
+    <style>
+        .pic{
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            background-color: #f2f2f2;
+            background-image: url("../image/sprite.png");
+            background-repeat: no-repeat;
+        }
+        .p1{
+            background-position: 0px 0px;
+        }
+        .p2{
+            background-position: 0px 30px;
+        }
+    </style>
+</head>
+<body>
+<p>
+    CSS Sprites 就是把网页中一些小图片整合到一张图片文件中，
+    再利用CSS的
+    background-image，
+    background-repeat，
+    background-position的组合进行背景定位，
+    background-position可以用数字能精确的定位出背景图片的位置。
+    可以减少http请求。
+</p>
+<div class="pic p1"></div>
+<div class="pic p2"></div>
+
+</body>
+</html>

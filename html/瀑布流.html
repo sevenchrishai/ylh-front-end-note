@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>瀑布流</title>
+    <style>
+        .fa ul{
+            float: left;
+        }
+        .fa ul li{
+            width: 100px;
+            background-color: #f2f2f2;
+            margin: 10px 0;
+            list-style: none;
+        }
+        .fa ul .h1{
+            height: 100px;
+        }
+        .fa ul .h2{
+            height: 200px;
+        }
+        .fa ul .h3{
+            height: 50px;
+        }
+        .fa ul .h4{
+            height: 150px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="fa">
+    <ul></ul>
+    <ul></ul>
+</div>
+
+<script src="../javascript/jquery-1.8.3.js"></script>
+<script>
+    function appendLi() {
+        var ulList = $(".fa>ul");
+        // 得出每个ul的高度
+        var ul1_h = ulList[0].offsetHeight;
+        var ul2_h = ulList[1].offsetHeight;
+        // 定义最小高度
+        var minH = Math.min(ul1_h,ul2_h);
+        var minUl;
+        var classH;
+        var liLi;
+        for (var i=0;i<ulList.length;i++){
+            if (ulList[i].offsetHeight == minH){
+                minUl = ulList[i]
+            }
+            // 随机数1,2
+            classH = getRandomHeight();
+            liLi = "<li class='h"+ classH +"'></li>"
+        }
+        $(minUl).append(liLi);
+    }
+    function getRandomHeight() {
+        return Math.floor(Math.random()*3 + 1)
+    }
+    // 相当于原生js的window.onload事件
+    $(function() {
+        for(var i=0;i<20;i++){
+            appendLi();
+        }
+    })
+    $(window).on('scroll',function(){
+        if($(document).scrollTop() + $(window).height() > $(document).height() - 20){
+            $(document).scrollTop($(document).scrollTop()-10);  //拉到底就把滚动条往上少拉10px
+            appendLi();
+        }
+    });
+</script>
+</body>
+</html>

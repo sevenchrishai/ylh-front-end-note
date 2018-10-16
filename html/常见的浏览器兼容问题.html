@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>常见的浏览器兼容问题</title>
+</head>
+<body>
+<p>1.不同浏览器的标签默认的外补丁和内补丁不同;<br>
+    解决：CSS里 {margin:0;padding:0;}
+</p>
+<p>2.块属性标签float后，又有横行的margin情况下，在IE6显示margin比设置的大;<br>
+    解决：在float的标签样式控制中加入 display:inline;将其转化为行内属性 <br>
+    类似：行内属性标签，设置display:block后采用float布局，又有横行的margin的情况，IE6间距bug；<br>
+    解决：行内属性标签，为了设置宽高，我们需要设置display:block;(除了input标签比较特殊)。
+    在用float布局并有横向的margin后，在IE6下，他就具有了块属性float后的横向margin的bug。
+    不过因为它本身就是行内属性标签，所以我们再加上display:inline的话，它的高宽就不可设了。
+    这时候我们还需要在display:inline后面加入display:talbe。
+</p>
+<p>3.设置较小高度标签（一般小于10px），在IE6，IE7，遨游中高度超出自己设置高度;<br>
+    给超出高度的标签设置overflow:hidden;或者设置行高line-height 小于你设置的高度。
+</p>
+<p>4.图片默认有间距;<br>
+    解决：使用float给img布局（因为img标签是行内属性标签，所以只要不超出容器宽度，img标签都会排在一行里，
+    但是部分浏览器的img标签之间会有个间距。去掉这个间距使用float是正道。）
+</p>
+<p>5.标签最低高度设置min-height不兼容;<br>
+    解决：如果我们要设置一个标签的最小高度200px，需要进行的设置为：{min-height:200px; height:auto !important;
+    height:200px; overflow:visible;}
+</p>
+<p>6.透明度的兼容CSS设置;<br>
+    解决：一般在ie中用的是filter:alpha(opacity=0);这个属性来设置div或者是块级元素的透明度，
+    而在firefox中，一般就是直接使用opacity:0,
+    对于兼容的，一般的做法就是在书写css样式的将2个都写上就行，就能实现兼容
+</p>
+
+</body>
+</html>

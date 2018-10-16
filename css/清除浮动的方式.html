@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>清除浮动的方式</title>
+    <style>
+        article{
+            margin-top: 10px;
+        }
+        .fa{
+            background-color: #dddddd;
+        }
+        h1{
+            background-color: #6b92b9;
+        }
+        .left{
+            float: left;
+            height: 100px;
+            background-color: lightblue;
+        }
+        .right{
+            float: right;
+            height: 100px;
+            background-color: lightgreen;
+        }
+        .footer{
+            height: 50px;
+            background-color: deepskyblue;
+        }
+        .f2{
+            overflow: hidden;
+            *zoom:1;
+        }
+        .clearfix{*zoom:1;}
+        .clearfix:after{
+            content: ".";
+            display: block;
+            height: 0;
+            visibility: hidden;
+            clear: both;
+        }
+        .cf:before,.cf:after{
+            content: "";
+            display: table;
+        }
+        .cf:after{clear: both;}
+        .cf{zoom: 1;}
+    </style>
+</head>
+<body>
+<article>
+    <div class="fa f1">
+        <h1>（1）在浮动元素末尾添加一个空标签</h1>
+        <div class="main left">主内容区-浮动出现的最开始的意义就是用来让文字环绕图片的</div>
+        <div class="side right">侧边，
+            优点：通俗易懂，容易掌握；
+            缺点：可以想象通过此方法，会添加多少无意义的空标签，有违结构与表现的分离，在后期维护中将是噩梦</div>
+        <!--如果不加以下，fa高度会塌陷-->
+        <div style="clear: both;"></div>
+        <!--<br clear="all">-->
+    </div>
+    <div class="footer">尾部</div>
+</article>
+<article>
+    <div class="fa f2">
+        <h1>（2）父元素设置overflow:hidden（在IE6还需要触发 hasLayout，如zoom:1）</h1>
+        <div class="main left">主内容区</div>
+        <div class="side right">侧边，
+            优点：不存在结构和语义化问题，代码量极少；
+            缺点：内容增多时候容易造成不会自动换行导致内容被隐藏掉，无法显示需要溢出的元素。</div>
+    </div>
+    <div class="footer">尾部</div>
+</article>
+<article>
+    <div class="fa f3 clearfix">
+        <h1>（3）使用 :after 伪元素，父元素设置clearfix:after（在IE6还需要触发 hasLayout，如zoom:1）</h1>
+        <div class="main left">主内容区</div>
+        <div class="side right">侧边</div>
+    </div>
+    <div class="footer">尾部</div>
+</article>
+<article>
+    <div class="fa f3 cf">
+        <h1>（4）使用 :before、:after 伪元素</h1>
+        <div class="main left">主内容区</div>
+        <div class="side right">侧边</div>
+    </div>
+    <div class="footer">尾部</div>
+</article>
+
+</body>
+</html>
