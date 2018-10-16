@@ -5,15 +5,18 @@
     <title>es6</title>
 </head>
 <body>
+<div>
+    <input type="text" readonly id="time" style="font-size: 50px; border: 0">
+</div>
 
 <script>
 
     /**
      * var / let / const 的用法
      */
-    // let 声明的变量只在其声明的块或子块中可用（let的作用是块），可以替代立即执行函数使变量私有
-    // var 声明的变量的作用域是整个封闭函数（var的作用域是函数）
-    // const 声明创建一个常量（当value是对象时，可以改变对象中的内容），其作用域可以是全局或本地声明的块，通常情况下name用大写
+    // let 声明的变量只在其声明的块或子块中可用（let的作用域是块），可以替代立即执行函数使变量私有
+    // var 声明的变量的作用域是整个封闭函数（var的作用域是函数，不在函数内时在全局作用域的最顶部）
+    // const 声明创建一个常量（当value是对象（如{a:1}）时，可以改变对象中的内容，其指向的地址不变），其作用域可以是全局或本地声明的块，通常情况下name用大写
     function varTest() {
         var x = 1;
         if (1) {
@@ -60,9 +63,10 @@
     ARR.push(1);    //  可以向数组填充数据
     // ARR = [2];  //TypeError: Assignment to constant variable.
     console.log('-------------');
+
     /*
     * ... 指扩展运算符(spread)，表示一个数组的参数列表，
-    * 主要用于获取传递给函数的参数列表；数组构造和解构
+    * 主要用于获取传递给函数的参数列表；数组和对象的构造和解构
     * */
     // console.log(...[1,2,3]) // 1 2 3
     // function a(...args){
@@ -79,11 +83,31 @@
     // console.log(other)  // [2] 解构数组
     // console.log([...'hello']) //  ["h", "e", "l", "l", "o"] 扩展运算符
     console.log('-------------');
+
     /**
      *  模板字符串
      */
     var a = 'a';
     // console.log(`hello,${1+1},${a}`)
+    var el1 = `<div>
+            <h5>hi BOBO es6</h5>
+        </div>`;
+    var el2 = "<div>\
+        <h5>hi BOBO es5</h5>\
+    </div>";
+    document.write(el1)
+    document.write(el2)
+    //  padStart 和 padEnd 填充字符串，应用场景：时分秒
+    //  padStart()一共接受两个参数，第一个参数用来指定字符串的最小长度，第二个参数是用来补全的字符串。(es6字符串新方法)
+    t();
+    setInterval("t()", 1000)
+    function t() {
+        const now = new Date()
+        const hours = now.getHours().toString()
+        const minutes = now.getMinutes().toString()
+        const seconds = now.getSeconds().toString()
+        document.getElementById('time').value = `${hours.padStart(2, 0)}:${minutes.padStart(2, 0)}:${seconds.padStart(2, 0)}`
+    }
     var obj = {a: "a", b: "b", c: "c"};
     for (var i = 0 in obj) {
         console.log(obj[i]);
@@ -91,17 +115,22 @@
     console.log('-------------');
 
     /**
-     * 箭头符
+     * 箭头符(函数的快捷写法)
      */
     let array = ['a','b','c']
-    //传统写法
+    //传统写法es5
     array.forEach(function(v,i){
         // console.log(`${v} + ${i}`)
-    })
+    });
+    [1,2,3].map((function (x) {
+        return x+1;
+    }).bind(this))
     //ES6
-    // array.forEach((value,index) =>{
-    //     console.log(`${value} + ${index}`)
-    // })
+    array.forEach((value,index) =>{
+        console.log(`${value} + ${index}`)
+    });
+    // 当你的函数有且仅有一个参数的时候，是可以省略掉括号的。当你函数返回有且仅有一个表达式的时候可以省略{} 和 return；
+    [1,2,3].map(x => x+1)
 
     /**
      * do 表达式
@@ -118,17 +147,117 @@
     // console.log(x.t)
     //变量x会得到整个块级作用域的返回值。
     function f() { console.log('I am outside!'); }
-
     (function () {
         if (false) {
             // 重复声明一次函数f
             function f() { console.log('I am inside!'); }
         }
-
-        f();
+        // f();
     })();
+    console.log('-------------');
 
+    /**
+     * 函数默认参数
+     *
+     */
+    //es5
+    function fnes5(num) {
+        num = num || 100;
+        //当传入num时，num为传入的值
+        //当没传入参数时，num即有了默认值200
+        //有一个弊端，当传入0时，得不到0,输出的是100
+        console.log(num)
+    }
+    fnes5(0)
+    fnes5()
+    fnes5(200)
+    fnes6(0)
+    fnes6()
+    fnes6(200)
+    //es6
+    function fnes6(num = 100) {
+        console.log(num)
+    }
+    console.log('-------------');
 
+    /**
+     * 拓展的对象功能
+     */
+    // 键值对重名，可简写
+    function people(name, age) {
+        return {
+            name,
+            age
+        }
+    }
+    // 可省略冒号和function关键字
+    const student = {
+        name: "zs",
+        age: 12,
+        getAge: function () {
+            console.log(this.age)
+        },
+        getName() {
+            console.log(this.name)
+        }
+    }
+
+    /**
+     * 更方便的数据访问-解构
+     */
+    const boy = {
+        name: "ls",
+        age: 22
+    }
+    const girl = ['mm', 18];
+    const { name, age} = boy;
+    const [one, two] = girl;
+    console.log(name)
+    console.log(age)
+    console.log(one)
+    console.log(two)
+    // var body = request.body
+    // var username = body.username
+    // var password = body.password
+    // // es6 重构
+    // const { body, body: { username, password } } = request
+
+    /**
+     * import 和 export
+     */
+    // 1.当用export default people导出时，就用 import people 导入（不带大括号）
+    //
+    // 2.一个文件里，有且只能有一个export default。但可以有多个export。
+    //
+    // 3.当用export name 时，就用import { name }导入（记得带上大括号）
+    //
+    // 4.当一个文件里，既有一个export default people, 又有多个export name 或者 export age时，导入就用 import people, { name, age }
+    //
+    // 5.当一个文件里出现n多个 export 导出很多模块，导入时除了一个一个导入，也可以用import * as example
+    console.log('-------------');
+
+    /**
+     * Promise-用同步的方式去写异步代码-解决地狱回调-定义即执行
+     */
+    fetch('/api/todos')
+        .then(res => res.json())
+        .then(data => ({ data }))
+        .catch(err => ({ err }));
+    //
+    setTimeout(function() {
+        console.log(1)
+    }, 0);
+    new Promise(function executor(resolve) {
+        console.log(2);
+        for( var i=0 ; i<10000 ; i++ ) {
+            i == 9999 && resolve();
+        }
+        console.log(3);
+    }).then(function() {
+        console.log(4);
+    });
+    console.log(5);
+    // 打印顺序依次是 2 3 5 4 1
 
 
 
