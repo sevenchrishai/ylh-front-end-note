@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="cont">
+    <select id="type" name="type" style="width: 120px">
+        <option value="0">请选择</option>
+        <option value="1" name="type"> 1</option>
+        <option value="2" name="type"> 2</option>
+        <option value="3" name="type"> 3</option>
+    </select>
+    <select id="name" name="name" style="width: 240px">
+        <option value="0">请选择</option>
+    </select>
+</div>
+<a href="#" class="aa" id="c" title="aa">aaaaaaaa</a>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $("#type").change(function (){
+        // 清空
+        $("#name").empty();
+        $("#name").append("<option value=''>请选择</option>");
+        $("#name").get(0).selectedIndex = 0;
+        setTimeout(function () {
+            for(var i=0;i<10;i++){
+                $("#name").append("<option value="+i+">"+i+"</option>");
+            }
+        },200)
+    })
+    // 获取 dom节点的所有属性和方法
+    console.log('%O',document.querySelector('#c'))
+</script>
+</body>
+</html>

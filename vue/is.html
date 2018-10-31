@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <component  v-for="obj in arr" :is="obj.clmuCode" :text="obj.formContext"></component>
+    <hr>
+    <ul>
+        <li v-for="item in arr" :key="item.clmuCode">{{item.formContext}}</li>
+    </ul>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    // 组件循环，用 :is ; 数据循环，用 :key
+    Vue.component('com-a', {
+        props: ['text'],
+        template: '<div><h2>子组件a</h2>{{text}}</div>'
+    });
+    Vue.component('com-b', {
+        props: ['text'],
+        template: '<div><h2>子组件b</h2>{{text}}</div>'
+    });
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            arr: [
+                {"clmuCode": "com-b", "formContext": "asd"},
+                {"clmuCode": "com-a", "formContext": "fgh"}
+            ]
+        }
+    });
+</script>
+
+</body>
+</html>
