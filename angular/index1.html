@@ -28,13 +28,24 @@
     // })
 
     // 优化 链式调用
-    angular.module('myApp', [])
-        .controller('MyController1',function ($scope) {
-            $scope.empName = "ss"
-        })
-        .controller('MyController2',function ($scope) {
-            $scope.empName = 'dd'
-        })
+    // angular.module('myApp', [])
+    //     .controller('MyController1',function ($scope) {
+    //         $scope.empName = "ss"
+    //     })
+    //     .controller('MyController2',function ($scope) {  // 隐式声明依赖注入
+    //         $scope.empName = 'dd'
+    //     })
+    // 以上的代码还是有问题
+    // js代码压缩后形参会用abcd字母代替
+    // 代码压缩的$scope会被替代，angular解析不了
+    // 解决方法：
+    angular.module('myApp',[])
+        .controller('MyController1', ['$scope', function ($scope) { // 显示声明依赖注入
+            $scope.empName = 'ff'
+        }])
+        .controller('MyController2', ['$scope', function ($scope) {
+            $scope.empName = 'gg'
+        }])
 
 </script>
 </body>
