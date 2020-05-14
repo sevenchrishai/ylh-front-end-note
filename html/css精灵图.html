@@ -4,19 +4,25 @@
     <meta charset="UTF-8">
     <title>精灵图</title>
     <style>
+        .master{
+            width: 300px;
+            height: 300px;
+            background-image: url("../image/sprite.png");
+            background-repeat: no-repeat;
+        }
         .pic{
-            width: 50px;
-            height: 50px;
+            display: inline-block;
+            width: 36px;
+            height: 36px;
             margin: 10px;
-            background-color: #f2f2f2;
             background-image: url("../image/sprite.png");
             background-repeat: no-repeat;
         }
         .p1{
-            background-position: 0px 0px;
+            background-position: 0 0;
         }
         .p2{
-            background-position: 0px 30px;
+            background-position: -127px 0;
         }
     </style>
 </head>
@@ -30,6 +36,7 @@
     background-position可以用数字能精确的定位出背景图片的位置。
     可以减少http请求。
 </p>
+<div class="master"></div>
 <div class="pic p1"></div>
 <div class="pic p2"></div>
 
