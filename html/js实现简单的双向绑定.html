@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" id="txt">
+    <p id="show"></p>
+    <button id="c">改变txt为88</button>
+</div>
+
+<script>
+    /**
+     * js实现简单的双向绑定
+     * data: {
+     *     txt: ''
+     * }
+     * {{txt}}
+     * @type {{}}
+     */
+    var data = {}
+    // Object.defineProperty() 方法
+    // 它会直接在一个对象上定义一个新属性，
+    // 或者修改一个对象的现有属性，并返回此对象。
+    Object.defineProperty(data, 'txt', {
+        get: function () {
+            return data
+        },
+        set: function (newVal) {
+            console.log('newVal:',newVal)
+            document.getElementById('txt').value = newVal;
+            document.getElementById('show').innerHTML = newVal;
+        }
+    })
+    // View 2 Model
+    document.addEventListener('keyup', function (e) {
+        data.txt = e.target.value;
+        console.log('e.target.value:',e.target.value)
+    })
+    // Model 2 View
+    document.getElementById('c').addEventListener('click', function (e) {
+        data.txt = '88'
+    })
+</script>
+</body>
+</html>

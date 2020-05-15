@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>水印canvas</title>
+    <style>
+        body{
+            background-color: darkkhaki;
+        }
+    </style>
+</head>
+<body>
+<h1>hello world!</h1>
+<script>
+    var str = '科比 79708';
+    var id = '1.23452384164.123412415'
+
+    if (document.getElementById(id) !== null) {
+        document.body.removeChild(document.getElementById(id))
+    }
+
+    var can = document.createElement('canvas')
+    can.width = 200
+    can.height = 150
+
+    var cans = can.getContext('2d')
+    cans.rotate(45 * Math.PI / 180)
+    cans.font = '28px Vedana'
+    cans.fillStyle = 'rgba(228, 228, 228, 0.80)'
+    cans.textAlign = 'left'
+    cans.textBaseline = 'Middle'
+    cans.fillText(str, 30, 0)
+
+
+
+    var div = document.createElement('div')
+    div.style.width = '200px'
+    div.style.height = '150px'
+    div.style.background = 'url(' + can.toDataURL('image/png') + ') left top no-repeat'
+    div.style.backgroundColor = "#ff0000"
+    document.body.appendChild(div)
+
+</script>
+</body>
+</html>

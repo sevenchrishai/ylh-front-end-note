@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /**
+     * const 作用域，块级作用域下生效
+     * const 定义常量，当是具体值（string,number,boolean），不可改变；
+     *          当是对象（{},[]），不可改变的是它的引用地址，对象内属性可改变，可增加
+     */
+    const arr = [
+        {name: 'a'},
+        {name: 'b'},
+    ]
+    arr.push({name: 'c'})   // true
+    console.log(arr.length) // 3
+    // arr = [1,2] // 报错 Uncaught TypeError: Assignment to constant variable.
+    let f1 = []
+    for (let i of arr) { // * es6 for of 遍历
+        const dataResult1 = {}
+        dataResult1['name'] = i.name
+        f1.push(dataResult1)
+    }
+    console.log(f1) // [{name: 'a'},{name: 'b'},{name: 'c'}]
+    //
+    let f2 = []
+    let dataResult2 = {}
+    for (let i of arr) {
+        dataResult2['name'] = i.name
+        f2.push(dataResult2)
+    }
+    console.log(f2) // [{name: 'c'},{name: 'c'},{name: 'c'}]
+    /**
+     * 求多个数组之间的交集，要求结果数组不能重复
+     * @type {number[]}
+     */
+    let arr1 = [1,2,3,4,5,5,6,7,8,8,9]
+    let arr2 = [2,4,5,5,6,8,8]
+    let arr3 = [1,5,6,7,8,8,9]
+    function intersection(...args) {
+        if (args.length === 0) return []
+        if (args.length === 1) return args[0]
+        let tempArr = args.reduce((pre, cur) => {
+            return pre.filter(item => cur.includes(item))
+            // * filter() 过滤出指定数组中符合callback的所有元素，返回一个新数组；
+        })
+        console.log(tempArr) //[5, 5, 6, 8, 8]
+        // return [...new Set(tempArr)] // new Set去重处理
+        // Array.from方法从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。
+        return Array.from(new Set(tempArr)) // new Set去重处理;
+    }
+    console.log(intersection(arr1,arr2,arr3)) // [5, 6, 8]
+
+    /**
+     * 数组扁平化（二维数组变一维数组，多维数组变一维数组）
+     * @type {number[][]}
+     */
+    let arr5 = [[0, 1], [2, 3], [4, 5]]
+    let newArr = arr5.reduce((pre,cur)=>{
+        return pre.concat(cur)  // concat里可以是值，也可以是数组
+    },[])
+    console.log(newArr); // [0, 1, 2, 3, 4, 5]
+    // Array.flat(): ECMAScript 2019 新出的方法，扁平化嵌套数组，参数值默认为1，即二维数组
+    console.log(arr5.flat()); // [0, 1, 2, 3, 4, 5]
+    // 或者使用扩展符号 ...
+    /*
+     * ... 作用：将一个数组转为用逗号分隔的参数序列。
+     * eg: 求一个数组最大值
+     *  ES6 的写法: Math.max(...[14, 3, 77])
+     *  ES5 的写法: Math.max.apply(null, [14, 3, 77])
+     */
+    const flattened = arr5 => [].concat(...arr5);
+    console.log(flattened(arr5)); // [0, 1, 2, 3, 4, 5]
+    let arr6 = [[0, 1], [2, 3], [4,[5,6,7]]]
+    const newArr = function(arr){
+        return arr.reduce((pre,cur)=>pre.concat(Array.isArray(cur)?newArr(cur):cur),[])
+    }
+    console.log(newArr(arr6)); //[0, 1, 2, 3, 4, 5, 6, 7]
+    // Array.flat(): ECMAScript 2019 新出的方法，扁平化嵌套数组
+    arr6.flat(Infinity); // //使用 Infinity，可展开任意深度的嵌套数组
+
+</script>
+</body>
+</html>

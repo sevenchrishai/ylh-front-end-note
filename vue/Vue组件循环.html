@@ -7,10 +7,12 @@
 <body>
 
 <div id="app">
-    <component  v-for="obj in arr" :is="obj.clmuCode" :text="obj.formContext"></component>
+    <h4>组件循环用 :is</h4>
+    <component  v-for="obj in arr" :is="obj.componentCode" :text="obj.formContext"></component>
     <hr>
+    <h4>数据循环用 :key</h4>
     <ul>
-        <li v-for="item in arr" :key="item.clmuCode">{{item.formContext}}</li>
+        <li v-for="item in arr" :key="item.componentCode">{{item.formContext}}</li>
     </ul>
 </div>
 
@@ -30,8 +32,8 @@
         el: '#app',
         data: {
             arr: [
-                {"clmuCode": "com-b", "formContext": "asd"},
-                {"clmuCode": "com-a", "formContext": "fgh"}
+                {"componentCode": "com-b", "formContext": "asd"},
+                {"componentCode": "com-a", "formContext": "fgh"}
             ]
         }
     });
