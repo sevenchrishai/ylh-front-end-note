@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    /**
+     * 拼多多面试题：求字符串数组的最长公共前缀
+     * 比如输入：["flower","flow","flight"],输出："fl"
+     * 思路：先获取数组中的 最大值 和 最小值，求他两的最长公共前缀
+     */
+    var prefix = function (strArr) {
+        if (strArr === null || strArr.length === 0) return ""
+        if (strArr.length === 1) return strArr[0]
+        let min = 0, max = 0;
+        for (let i = 0, len = strArr.length; i < len; i++) {
+            if (strArr[min] > strArr[i]) min = i
+            if (strArr[max] < strArr[i]) max = i
+        }
+        for (let j = 0; j < strArr[min].length; j++) {
+            if (strArr[min].charAt(j) !== strArr[max].charAt(j)) {
+                return strArr[min].substring(0, j)
+            }
+        }
+        return strArr[min]
+    }
+    const arr = ["flower", "flow", "flight"]
+    console.log(prefix(arr));    // fl
+
+    /**
+     * forEach中return有效果吗？如何中断forEach循环？
+     *
+     * 中断方法：
+         使用try监视代码块，在需要中断的地方抛出异常。
+         官方推荐方法（替换方法）：用every和some替代forEach函数。
+         every在碰到return false的时候，中止循环。
+         some在碰到return ture的时候，中止循环
+     */
+    // for (let i=0;i<10;i++){
+    //     if (i===2) {
+    //         return false
+    //     }
+    //     console.log(i)
+    // }
+    arr.forEach((item, index) => {
+        if (index === 1) return // 不会中止循环
+        console.log(item)   // flower flight
+    })
+    arr.every((item, index)=>{
+        if (index === 1) return false
+        console.log(item)   // flower
+    })
+</script>
+</body>
+</html>
